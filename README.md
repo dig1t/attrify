@@ -57,6 +57,10 @@ Attrify.start()
 | **Sound** | 3 | `attr_ambient_sound`, `attr_proximity_sound`, `attr_touch_sound` |
 | **Visual** | 9 | `attr_beamer`, `attr_billboard`, `attr_color_cycler`, `attr_fader`, `attr_flickerer`, `attr_glowing`, `attr_pulser`, `attr_spotlighter`, `attr_trail` |
 
+## Examples
+
+Source code, `.rbxl`, and `.rbxm` examples are available in [Releases](https://github.com/dig1t/attrify/releases).
+
 ## Documentation
 
 See the [full documentation](https://firebit-dev.github.io/docs/attrify/docs/intro) for:
