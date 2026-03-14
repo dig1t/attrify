@@ -1,0 +1,30 @@
+name: Linter
+
+on:
+  push:
+    paths:
+      - 'src/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        uses: ok-nick/setup-aftman@v0.4.2
+
+      - name: Download type files
+        run: curl -L "https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/main/scripts/globalTypes.d.luau" > globalTypes.d.luau
+
+      - name: Generate sourcemaps
+        run: rojo sourcemap dev.project.json --include-non-scripts --output sourcemap.json
+
+      - name: Lint with luau-lsp
+        run: luau-lsp analyze --defs=globalTypes.d.luau --sourcemap=sourcemap.json --no-strict-dm-types --ignore=Packages/** --ignore=*.spec.luau --ignore=examples/** --ignore=modules/** --flag:LuauTinyControlFlowAnalysis=True src
+
+      - name : Lint with selene
+        run: selene src

@@ -1,0 +1,18 @@
+gitRepoUrl = ""
+
+[home]
+includeReadme = true
+title = "Attrify"
+gitSourceBranch = "main"
+changelog = true
+
+[docusaurus]
+url = "https://firebit-dev.github.io"
+baseUrl = "/docs/attrify"
+tagline = "No-code behavior system for Roblox using CollectionService tags and attributes"
+onBrokenLinks = "throw"
+onBrokenMarkdownLinks = "warn"
+
+[footer]
+style = "dark"
+copyright = "Copyright © firebit"

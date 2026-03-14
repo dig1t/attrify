@@ -1,0 +1,30 @@
+{
+  "luau-lsp.diagnostics.workspace": true,
+  "luau-lsp.require.mode": "relativeToWorkspaceRoot",
+  "luau-lsp.sourcemap.autogenerate": true,
+  "luau-lsp.sourcemap.enabled": true,
+  "luau-lsp.sourcemap.rojoProjectFile": "dev.project.json",
+  "luau-lsp.diagnostics.strictDatamodelTypes": false,
+  "luau-lsp.completion.imports.enabled": true,
+  "luau-lsp.types.definitionFiles": [
+    "testez.d.luau"
+  ],
+  "luau-lsp.ignoreGlobs": [
+    "**/_Index/**",
+    "*.d.luau",
+    "modules/**",
+    "examples/**",
+  ],
+
+  // "testez-companion.runTestsOnSave": true,
+  "editor.defaultFormatter": "EditorConfig.EditorConfig",
+  "editor.formatOnSave": true,
+  "[luau]": {
+    "editor.defaultFormatter": "JohnnyMorganz.stylua",
+    "editor.formatOnSave": true
+  },
+
+  // Ensure enough terminal history is preserved when running tests.
+  "terminal.integrated.scrollback": 10000,
+  "git.autoRepositoryDetection": "openEditors",
+}

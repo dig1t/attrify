@@ -1,0 +1,8 @@
+[package]
+name = "dig1t/palette"
+version = "1.0.1"
+description = "Module part of the dig1t/roblox-modules repository. Find the API here: https://dig1t.github.io/roblox-modules/api/Palette"
+license = "Apache-2.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+exclude = ["*.spec.luau"]

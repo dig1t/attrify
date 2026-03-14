@@ -1,0 +1,13 @@
+title = "roblox-modules"
+
+gitSourceBranch = "main"
+changelog = true
+classOrder = []
+
+[docusaurus]
+onBrokenLinks = "throw"
+onBrokenMarkdownLinks = "warn"
+
+[footer]
+style = "light"
+copyright = "Copyright © dig1t. Built with Moonwave and Docusaurus"

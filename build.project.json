@@ -1,0 +1,22 @@
+{
+  "name": "Attrify Dev",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+
+      "Attrify": {
+        "$path": "src",
+
+        "Util": {
+          "$path": "modules/roblox-modules/src/Util"
+        },
+
+        "Signal": {
+          "$path": "modules/roblox-modules/src/Signal"
+        }
+      }
+	  }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "red",
+  "version": "2.2.10",
+  "description": "Simplified server-to-client, client-to-server, and server-to-server communication",
+  "main": "src/init.luau",
+  "scripts": {
+    "build:dependencies": "wally install",
+    "build:rojo": "rojo build -o dev-build.rbxl build.project.json",
+    "build:docs": "moonwave build",
+    "build": "npm run build:dependencies && npm run build:rojo",
+    "dev": "npm run build && dev-build.rbxl && npm start",
+    "start": "rojo serve build.project.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dig1t/red.git"
+  },
+  "author": "dig1t",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/dig1t/red/issues"
+  },
+  "homepage": "https://github.com/dig1t/red#readme",
+  "dependencies": {
+    "moonwave": "^1.2.1"
+  }
+}

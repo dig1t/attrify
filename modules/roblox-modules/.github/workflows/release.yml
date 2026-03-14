@@ -1,0 +1,41 @@
+name: Release module packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/*/wally.toml'
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install aftman dependencies
+        uses: ok-nick/setup-aftman@v0.4.2
+
+      - name: Install dependencies
+        run: npm run build:dependencies-unix
+
+      - name: Publish all changed modules to wally
+        shell: bash
+        env:
+          WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
+        run: |
+          rm -rf packages testez.toml .github node_modules .vscode
+          mkdir -p ~/.wally
+          printf "[tokens]\n\"https://api.wally.run/\" = \"%s\"" "$WALLY_TOKEN" >> ~/.wally/auth.toml
+          find src -maxdepth 1 -type d -exec sh -c 'cd "{}" && wally publish || true' \;
