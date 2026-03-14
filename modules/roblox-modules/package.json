@@ -1,0 +1,26 @@
+{
+  "name": "roblox-modules",
+  "version": "1.2.18",
+  "description": "Module part of the dig1t/roblox-modules repository",
+  "main": "src/init.luau",
+  "scripts": {
+    "build:dependencies-unix": "find src -type d -exec sh -c 'cd \"{}\" && wally install || true' \\;",
+    "build:docs": "moonwave build",
+    "build": "rojo build -o dev-build.rbxl build.project.json",
+    "dev": "npm run build && dev-build.rbxl && npm start",
+    "start": "rojo serve build.project.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dig1t/roblox-modules.git"
+  },
+  "author": "dig1t",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/dig1t/roblox-modules/issues"
+  },
+  "homepage": "https://dig1t.github.io/roblox-modules",
+  "dependencies": {
+    "moonwave": "^1.1.3"
+  }
+}

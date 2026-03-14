@@ -1,0 +1,27 @@
+# Roblox .gitignore
+
+.DS_Store
+*.bat
+
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/*.code-snippets
+
+# dependency directories
+Packages
+ServerPackages
+node_modules
+
+# build files
+sourcemap.json
+
+# project place files
+*.rbxlx
+*.rbxl
+
+# lock files
+*.lock
+package-lock.json

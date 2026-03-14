@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+    paths:
+      - 'src/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        uses: ok-nick/setup-aftman@v0.4.2
+        with:
+          path: '.github'
+
+      - name: Download type files
+        run: curl -L "https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/main/scripts/globalTypes.d.luau" > globalTypes.d.luau
+
+      - name: Generate sourcemaps
+        run: rojo sourcemap --include-non-scripts --output sourcemap.json
+
+      - name: Lint with luau-lsp
+        run: luau-lsp analyze --defs=globalTypes.d.luau --sourcemap=sourcemap.json --no-strict-dm-types --ignore=**/_Index/** --ignore=*.spec.luau src
+
+      - name : Lint with selene
+        run: selene src

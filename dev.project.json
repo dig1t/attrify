@@ -1,0 +1,43 @@
+{
+  "name": "attrify Dev",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+
+      "Attrify": {
+        "$path": "src",
+
+        "Util": {
+          "$path": "modules/roblox-modules/src/Util"
+        },
+
+        "Maid": {
+          "$path": "modules/roblox-modules/src/Maid"
+        },
+
+        "Signal": {
+          "$path": "modules/roblox-modules/src/Signal"
+        }
+      },
+
+      "TestEZ": {
+        "$path": "modules/testez"
+      }
+	  },
+
+    "ReplicatedFirst": {
+      "$className": "ReplicatedFirst",
+      "$path": "dev/Client"
+    },
+
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+
+      "ServerSample": {
+        "$path": "dev/Server"
+      }
+    }
+  }
+}

@@ -1,0 +1,121 @@
+# https://github.com/nightcycle/occlusion-camera/blob/main/.github/workflows/release.yml
+
+name: Release package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'version.txt'
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Get version
+        id: version
+        uses: actions/github-script@0.3.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const core = require('@actions/core')
+            const fs = require('fs');
+            const version = fs.readFileSync('${{ github.workspace }}/version.txt', 'utf8')
+            core.setOutput('version', version);
+            console.log(version)
+
+      - name: Update files with new version
+        id: update-files
+        shell: bash
+        run: |
+          # read wally.toml file
+          wallyTOMLContents=$(<wally.toml)
+
+          # swap out name
+          targetNameLine=$(echo "$wallyTOMLContents" | grep -F "name = ")
+          goalNameLine="name = \"${{github.repository}}\""
+          wallyTOMLContents="${wallyTOMLContents/${targetNameLine}/${goalNameLine}}"
+
+          # swap out version
+          targetVersionLine=$(echo "$wallyTOMLContents" | grep -F "version = ")
+          goalVersionLine="version = \"${{ steps.version.outputs.version }}\""
+          wallyTOMLContents="${wallyTOMLContents/${targetVersionLine}/${goalVersionLine}}"
+
+          # update wally.toml file
+          echo "$wallyTOMLContents" > wally.toml
+
+          # read package.json file
+          defaultJSONContents=$(<package.json)
+          targetJSONVersionLine=$(echo "$defaultJSONContents" | grep -F "\"version\": ")
+          goalJSONVersionLine="  \"version\": \"${{ steps.version.outputs.version }}\","
+          defaultJSONContents="${defaultJSONContents/${targetJSONVersionLine}/${goalJSONVersionLine}}"
+
+          # update package.json file
+          echo "$defaultJSONContents" > package.json
+
+          # read README.md file
+          readmeContents=$(<README.md)
+          targetReadmeVersionLine=$(echo "$readmeContents" | grep -F "${{ github.event.repository.name }} = \"")
+          goalReadmeVersionLine="${{ github.event.repository.name }} = \"${{github.repository}}@${{ steps.version.outputs.version }}\""
+          readmeContents="${readmeContents/${targetReadmeVersionLine}/${goalReadmeVersionLine}}"
+
+          # update README.md file
+          echo "$readmeContents" > README.md
+
+      - name: Commit files with new version
+        id: commit-files
+        run: |
+          # Commit version update
+          git config user.name "$(git log -n 1 --pretty=format:%an)"
+          git config user.email "$(git log -n 1 --pretty=format:%ae)"
+          git add --all
+          git commit -m "Update to v${{ steps.version.outputs.version }}"
+          git push -u origin main --force-with-lease || true
+
+          COMMIT_SHA=$(git rev-parse HEAD)
+
+          echo "Committed changes"
+          echo "commitSHA=$COMMIT_SHA" >> $GITHUB_OUTPUT
+
+      # Create GitHub release
+      - uses: release-drafter/release-drafter@v6
+        id: createRelease
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: 'v${{ steps.version.outputs.version }}'
+          tag: 'v${{ steps.version.outputs.version }}'
+          version: ${{ steps.version.outputs.version }}
+          publish: true
+          commitish: ${{ steps.commit-files.outputs.commitSHA }}
+
+      - name: Install aftman dependencies
+        uses: ok-nick/setup-aftman@v0.4.2
+
+      - name: Install dependencies
+        run: npm run build:dependencies
+
+      # - name: Publish to wally
+      #   shell: bash
+      #   env:
+      #     WALLY_TOKEN: ${{ secrets.WALLY_TOKEN }}
+      #   run: |
+      #     rm -rf packages testez.toml .github node_modules .vscode
+      #     mkdir -p ~/.wally
+      #     printf "[tokens]\n\"https://api.wally.run/\" = \"%s\"" "$WALLY_TOKEN" >> ~/.wally/auth.toml
+      #     wally publish

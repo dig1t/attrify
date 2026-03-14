@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "eamodio.gitlens",
+    "EditorConfig.EditorConfig",
+    "evaera.vscode-rojo",
+    "GitHub.copilot",
+    "Gruntfuggly.todo-tree",
+    "JohnnyMorganz.luau-lsp",
+    "Kampfkarren.roblox-lua-autofills",
+    "Kampfkarren.selene-vscode",
+    "usernamehw.errorlens"
+  ]
+}
