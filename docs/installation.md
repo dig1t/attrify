@@ -6,9 +6,9 @@ sidebar_position: 2
 
 ## Setup
 
-Attrify needs to be started on both server and client. Each watcher automatically determines whether it should run on server or client.
+Roblox games run code in two places: the **server** (the computer running the game for everyone) and the **client** (each player's own device). Attrify needs to be started in both places, because some watchers run on the server (like kill parts) and some run on the client (like spinning decorations). You don't have to think about which is which. Each watcher picks the right place on its own.
 
-### Server Script
+### Server script
 
 ```lua
 -- ServerScriptService/Server.server.luau
@@ -18,7 +18,7 @@ local Attrify = require(ReplicatedStorage.Packages.Attrify)
 Attrify.start()
 ```
 
-### Client Script
+### Client script
 
 ```lua
 -- ReplicatedFirst/Client.client.luau (or StarterPlayerScripts)
@@ -28,52 +28,52 @@ local Attrify = require(ReplicatedStorage.Packages.Attrify)
 Attrify.start()
 ```
 
-## Using Watchers
+## Using watchers
 
-Once attrify is started, simply add tags to your parts:
+Once Attrify is started, add tags to your parts:
 
 1. Select a part in Roblox Studio
 2. Open the **Tag Editor** (View → Tag Editor)
 3. Add a tag like `attr_jump_pad` or `attr_spinner`
-4. Configure attributes in the **Properties** panel
+4. Change the part's attributes in the **Properties** panel to tweak how it behaves
 
-### Tag Naming
+### Tag naming
 
-Most watchers use the `attr_` prefix for their tags:
+Most watcher tags start with `attr_`:
 - `attr_spinner` - Spinner watcher
-- `attr_jump_pad` - Jump Pad watcher (note: some use underscore naming)
+- `attr_jump_pad` - Jump Pad watcher
 - `attr_coin` - Coin watcher
 
-Check the [Watcher Reference](./reference) for the exact tag name for each watcher.
+A couple don't (like `checkpoint` and `spawn_point`), so check the [Watcher Reference](./reference) for the exact tag name.
 
-## Listening to Events
+## Listening to events
 
-Many watchers fire signals that you can listen to:
+Some watchers fire signals when something happens, so your own code can react:
 
 ```lua
 local Attrify = require(ReplicatedStorage.Packages.Attrify)
 Attrify.start()
 
--- Listen for coin collection
+-- Runs every time a player collects a coin
 Attrify.Signals.CoinCollected:Connect(function(player, value, part)
-    -- Award coins to player
+    -- Award coins to the player
     print(player.Name, "collected", value, "coins!")
 end)
 
--- Listen for button presses
+-- Runs every time a player presses a button
 Attrify.Signals.ButtonPressed:Connect(function(player, part)
-    -- Trigger game logic
+    -- Trigger your game logic
     print(player.Name, "pressed button:", part.Name)
 end)
 ```
 
-### Available Signals
+### Available signals
 
-| Signal | Parameters | Description |
-|--------|------------|-------------|
-| `CoinCollected` | player, value, part | Coin was collected |
-| `CollectibleCollected` | player, type, amount, part | Collectible was picked up |
-| `PromptTriggered` | player, part | Proximity prompt was triggered |
-| `Clicked` | player, part | Clickable part was clicked |
-| `ButtonPressed` | player, part | Button was touched |
-| `PartBroken` | part | Breakable part was destroyed |
+| Signal | Parameters | Fires when |
+|--------|------------|------------|
+| `CoinCollected` | player, value, part | A player picks up a coin |
+| `CollectibleCollected` | player, type, amount, part | A player picks up a collectible |
+| `PromptTriggered` | player, part | A player uses a proximity prompt |
+| `Clicked` | player, part | A player clicks a clickable part |
+| `ButtonPressed` | player, part | A player touches a button |
+| `PartBroken` | part | A breakable part gets destroyed |

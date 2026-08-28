@@ -1,26 +1,26 @@
 # Attrify
 
-No-code behavior system for Roblox using CollectionService tags and attributes.
+Attrify lets you add game mechanics to your Roblox game without writing code.
 
-Add tags to parts and configure behavior through attributes - no scripting required for common game mechanics.
+Here's how it works: you put a tag (a label) on a part, and Attrify makes that part do something. Want a jump pad? Tag a part with `attr_jump_pad` and it becomes one. Want to change how high it launches players? Set an attribute (a setting on the part) in the Properties panel. No scripts needed.
 
-## Features
+## What you get
 
-- **50 pre-built watchers** for common game mechanics
-- **Zero scripting** - configure everything via attributes
-- **Modular** - only use what you need
-- **Type-safe** - full Luau strict mode support
-- **Signals** - react to events in your own code
+- **50 ready-made behaviors** (called watchers) for things games need all the time: coins, kill parts, moving platforms, doors, checkpoints, and more
+- **No scripting required** - everything is set up with tags and attributes in Roblox Studio
+- **Use only what you need** - watchers only run when you tag something with them
+- **Works with typed Luau** - if you do write code, the types are all there
+- **Signals** - if you want your own code to react when something happens (like a coin being collected), you can
 
-## Quick Example
+## Try it
 
 1. Add the `attr_jump_pad` tag to any BasePart
-2. Set `attr_jump_distance` attribute to `30`
-3. Players touching the part will be launched!
+2. Set the `attr_jump_distance` attribute to `30`
+3. Play the game and touch the part. You get launched!
 
-That's it! No code needed for basic functionality.
+That's the whole setup for most watchers.
 
-But if you want to listen for events:
+If you want your own code to react to events, connect to a signal:
 ```lua
 local Attrify = require(ReplicatedStorage.Packages.Attrify)
 
@@ -29,7 +29,9 @@ Attrify.Signals.CoinCollected:Connect(function(player, value, part)
 end)
 ```
 
-## Quick Start
+## Getting started
+
+Attrify needs one line of code on the server and one on the client. After that, everything is tags and attributes.
 
 ```lua
 -- Server script
@@ -41,7 +43,7 @@ local Attrify = require(ReplicatedStorage.Packages.Attrify)
 Attrify.start()
 ```
 
-## Watcher Categories
+## All 50 watchers
 
 | Category | Count | Watchers |
 |----------|-------|----------|
@@ -59,11 +61,11 @@ Attrify.start()
 
 ## Examples
 
-Source code, `.rbxl`, and `.rbxm` examples are available in [Releases](https://github.com/dig1t/attrify/releases).
+Source code, `.rbxl`, and `.rbxm` examples are in [Releases](https://github.com/dig1t/attrify/releases).
 
 ## Documentation
 
-See the [full documentation](https://firebit-dev.github.io/docs/attrify/docs/intro) for:
-- Complete watcher reference
-- Installation guide
-- API documentation
+The [full documentation](https://firebit-dev.github.io/docs/attrify/docs/intro) covers:
+- Every watcher and its settings
+- How to install Attrify
+- The API for writing your own code around it

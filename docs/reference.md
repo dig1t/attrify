@@ -4,9 +4,11 @@ sidebar_position: 3
 
 # Watcher Reference
 
-Quick reference for all Attrify watchers and their attributes.
+Every Attrify watcher and its settings, in one place.
 
-## Feature Navigation
+Each watcher shows its **tag** (what you add in the Tag Editor) and where it **runs** (server or client; you don't need to do anything about this, it's just good to know). The table under each watcher lists the attributes you can set in the Properties panel. Every attribute has a default, so you only need to set the ones you want to change.
+
+## Jump to a category
 
 [Animation](#animation) | [Collect](#collect) | [Combat](#combat) | [Constraint](#constraint) | [Destruction](#destruction) | [Door](#door) | [Interaction](#interaction) | [Movement](#movement) | [Obby](#obby) | [Sound](#sound) | [Visual](#visual)
 
@@ -65,7 +67,7 @@ Orbits an object around a center point.
 |-----------|------|---------|-------------|
 | `attr_orbit_radius` | number | 5 | Radius of the orbit in studs |
 | `attr_orbit_speed` | number | 1 | Rotations per second |
-| `attr_center_name` | string | — | Name of part to orbit around (optional) |
+| `attr_center_name` | string | none | Name of part to orbit around (optional) |
 
 ---
 
@@ -153,7 +155,7 @@ Generic collectible item that can be picked up by players.
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `attr_type` | string | "generic" | Type of collectible |
-| `attr_value` | any | — | Value of the collectible |
+| `attr_value` | any | none | Value of the collectible |
 | `attr_respawn_time` | number | 10 | Time before respawning (0 = no respawn) |
 
 ---
@@ -681,7 +683,7 @@ Adds a neon glow effect to a part.
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `attr_glow_color` | Color3 | — | Color of the glow (defaults to part color) |
+| `attr_glow_color` | Color3 | part color | Color of the glow |
 | `attr_brightness` | number | 1 | PointLight brightness |
 
 ---
