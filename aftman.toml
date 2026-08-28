@@ -1,6 +1,6 @@
 [tools]
 wally-package-types = "JohnnyMorganz/wally-package-types@1.4.2"
-luau-lsp = "JohnnyMorganz/luau-lsp@1.46.0"
+luau-lsp = "JohnnyMorganz/luau-lsp@1.69.0"
 rojo = "rojo-rbx/rojo@7.4.1"
 selene = "Kampfkarren/selene@0.26.1"
 stylua = "JohnnyMorganz/StyLua@2.0.2"

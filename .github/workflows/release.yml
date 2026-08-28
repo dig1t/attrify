@@ -87,8 +87,12 @@ jobs:
           git config user.name "$(git log -n 1 --pretty=format:%an)"
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
           git add --all
-          git commit -m "Update to v${{ steps.version.outputs.version }}"
-          git push -u origin main --force-with-lease
+          if git diff --cached --quiet; then
+            echo "Files already at v${{ steps.version.outputs.version }}, nothing to commit"
+          else
+            git commit -m "Update to v${{ steps.version.outputs.version }}"
+            git push -u origin main --force-with-lease
+          fi
 
           COMMIT_SHA=$(git rev-parse HEAD)
 
