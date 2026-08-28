@@ -35,7 +35,7 @@ Install with [Wally](https://wally.run) by adding it to your `wally.toml`:
 
 ```toml
 [dependencies]
-attrify = "dig1t/attrify@1.0.0"
+attrify = "dig1t/attrify@1.0.1"
 ```
 
 Attrify needs one line of code on the server and one on the client. After that, everything is tags and attributes.
