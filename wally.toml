@@ -5,7 +5,6 @@ description = "No-code behavior system for Roblox using CollectionService tags a
 license = "Apache-2.0"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
-private = true
 
 include = ["src", "default.project.json"]
 exclude = ["src/**/*.spec.luau"]
