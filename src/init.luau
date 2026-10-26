@@ -117,8 +117,10 @@ setmetatable(Attrify.Signals, {
 	__index = function(_self, key)
 		local watcherPaths = {
 			-- [signal name in module] = "path.to.module"
+			-- A third part names the module's field when it differs from the key
 			CollectibleCollected = "Collect.collectible",
 			CoinCollected = "Collect.coin",
+			CoinLocalTouched = "Collect.coin.LocalTouched",
 			PromptTriggered = "Interaction.prompt_part",
 			Clicked = "Interaction.clickable",
 			ButtonPressed = "Interaction.button",
@@ -137,6 +139,7 @@ setmetatable(Attrify.Signals, {
 		local path = watcherPaths[key]
 		if path then
 			local parts = string.split(path, ".")
+			local field = parts[3] or key
 			local watchersFolder = script:FindFirstChild("Watchers")
 			if watchersFolder then
 				local folder = watchersFolder:FindFirstChild(parts[1])
@@ -144,8 +147,8 @@ setmetatable(Attrify.Signals, {
 					local watcher = folder:FindFirstChild(parts[2])
 					if watcher and watcher:IsA("ModuleScript") then
 						local module = require(watcher) :: any
-						if typeof(module) == "table" and module[key] then
-							return module[key]
+						if typeof(module) == "table" and module[field] then
+							return module[field]
 						end
 					end
 				end

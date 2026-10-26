@@ -8,6 +8,7 @@
 	- attr_text_color: Color3 (default: white) - Text color
 	- attr_text_size: number (default: 24) - Text size
 	- attr_offset: number (default: 3) - Offset above the part
+	- attr_font: Font (default: Gotham Bold) - Text font
 ]]
 
 local RunService = game:GetService("RunService")
@@ -22,8 +23,22 @@ local DEFAULT_TEXT = ""
 local DEFAULT_TEXT_COLOR = Color3.new(1, 1, 1)
 local DEFAULT_TEXT_SIZE = 24
 local DEFAULT_OFFSET = 3
+local DEFAULT_FONT = Enum.Font.GothamBold
 
 local BillboardWatcher: CollectionWatcher.CollectionWatcher<BasePart> = CollectionWatcher.new(COLLECTION_TAG)
+
+--[[
+	Applies attr_font when it holds a Font, else the default font.
+]]
+local function applyFont(textLabel: TextLabel, part: BasePart)
+	local font = part:GetAttribute("attr_font")
+
+	if typeof(font) == "Font" then
+		textLabel.FontFace = font
+	else
+		textLabel.Font = DEFAULT_FONT
+	end
+end
 
 BillboardWatcher:RegisterHandler(function(object: CollectionWatcher.CollectionObject<BasePart>)
 	if not IS_CLIENT then
@@ -36,6 +51,7 @@ BillboardWatcher:RegisterHandler(function(object: CollectionWatcher.CollectionOb
 	local offset = object.context:GetAttribute("attr_offset") :: number? or DEFAULT_OFFSET
 
 	local billboard = Instance.new("BillboardGui")
+	billboard.ResetOnSpawn = false
 	billboard.Size = UDim2.new(0, 200, 0, 50)
 	billboard.StudsOffset = Vector3.new(0, offset, 0)
 	billboard.AlwaysOnTop = true
@@ -47,7 +63,7 @@ BillboardWatcher:RegisterHandler(function(object: CollectionWatcher.CollectionOb
 	textLabel.Text = text
 	textLabel.TextColor3 = textColor
 	textLabel.TextSize = textSize
-	textLabel.Font = Enum.Font.GothamBold
+	applyFont(textLabel, object.context)
 	textLabel.TextScaled = false
 	textLabel.Parent = billboard
 
@@ -58,6 +74,8 @@ BillboardWatcher:RegisterHandler(function(object: CollectionWatcher.CollectionOb
 			textLabel.TextColor3 = object.context:GetAttribute("attr_text_color") :: Color3? or DEFAULT_TEXT_COLOR
 		elseif attributeName == "attr_text_size" then
 			textLabel.TextSize = object.context:GetAttribute("attr_text_size") :: number? or DEFAULT_TEXT_SIZE
+		elseif attributeName == "attr_font" then
+			applyFont(textLabel, object.context)
 		elseif attributeName == "attr_offset" then
 			billboard.StudsOffset = Vector3.new(
 				0,
