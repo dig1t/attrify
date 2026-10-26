@@ -36,7 +36,8 @@
 ]=]
 
 local CollectionWatcher = require(script.Modules.CollectionWatcher)
-local Signal = require(script.Signal)
+-- Wally installs dependencies beside the package, not inside it
+local Signal = require(script.Parent.Signal)
 
 export type Config = {
 	--- List of module names to load. If nil, all modules are loaded.

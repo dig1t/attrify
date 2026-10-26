@@ -7,16 +7,20 @@
       "$className": "ReplicatedStorage",
 
       "Attrify": {
-        "$path": "src",
+        "$path": "src"
+      },
 
-        "Util": {
-          "$path": "modules/roblox-modules/src/Util"
-        },
+      "Util": {
+        "$path": "modules/roblox-modules/src/Util"
+      },
 
-        "Signal": {
-          "$path": "modules/roblox-modules/src/Signal"
-        }
+      "Maid": {
+        "$path": "modules/roblox-modules/src/Maid"
+      },
+
+      "Signal": {
+        "$path": "modules/roblox-modules/src/Signal"
       }
-	  }
+    }
   }
 }
