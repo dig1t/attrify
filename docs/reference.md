@@ -322,10 +322,12 @@ Rotating gate that swings open when triggered.
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `attr_open_angle` | number | 90 | Angle to rotate when open |
+| `attr_open_angle` | number | 90 | Angle to rotate when open (negative swings the other way) |
 | `attr_open_time` | number | 0.5 | Time to open/close |
 | `attr_trigger_distance` | number | 10 | Distance to trigger opening |
 | `attr_axis` | Vector3 | (0, 1, 0) | Rotation axis |
+
+**Optional children:** Sounds named `Open` and `Close`. `Open` plays when the gate starts opening and `Close` when it finishes closing.
 
 ---
 
