@@ -134,7 +134,9 @@ Collectible watchers run on the **server** (with optional client visuals) and fi
 
 Currency collectible that players can pick up. Spins on the client.
 
-**Signal:** `CoinCollected(player, value, part)`
+**Signals:**
+- `CoinCollected(player, value, part)` - A player picks up the coin (server)
+- `CoinLocalTouched(part)` - The local player's character first touches the coin (client). Use it to start a pickup effect before the server's collect arrives. It fires once per coin, so it suits coins that are removed when collected.
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -142,6 +144,14 @@ Currency collectible that players can pick up. Spins on the client.
 | `attr_respawn_time` | number | 10 | Time before respawning (0 = no respawn) |
 | `attr_spin_speed` | number | 90 | Degrees per second to spin (client-side) |
 | `attr_spin_axis` | Vector3 | (0, 1, 0) | Axis to spin around (client-side) |
+| `attr_owner` | number | none | UserId of the only player who can collect the coin. Other players can't pick it up, and their clients hide it |
+| `attr_auto_collect` | number | none | With `attr_owner`, the seconds after which your server credits the owner. The owner's client fires `CoinLocalTouched` just before then, so the pickup effect still plays. Attrify doesn't credit the owner itself |
+| `attr_pivot_root` | boolean | false | When the part's parent is a Model, spin the whole Model around its pivot instead of the part (client-side) |
+| `attr_bob_height` | number | 0 | With `attr_pivot_root`, how many studs the Model bobs up and down (client-side) |
+
+**Optional child:** a BasePart named `PickupHitbox`. Touching it also fires `CoinLocalTouched`, for games whose server collects through a wider, invisible hitbox.
+
+*Set `attr_owner`, `attr_auto_collect`, `attr_pivot_root` and `attr_bob_height` before you tag the coin. The client reads them once.*
 
 ---
 
@@ -312,10 +322,12 @@ Rotating gate that swings open when triggered.
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `attr_open_angle` | number | 90 | Angle to rotate when open |
+| `attr_open_angle` | number | 90 | Angle to rotate when open (negative swings the other way) |
 | `attr_open_time` | number | 0.5 | Time to open/close |
 | `attr_trigger_distance` | number | 10 | Distance to trigger opening |
 | `attr_axis` | Vector3 | (0, 1, 0) | Rotation axis |
+
+**Optional children:** Sounds named `Open` and `Close`. `Open` plays when the gate starts opening and `Close` when it finishes closing.
 
 ---
 
@@ -637,6 +649,7 @@ Adds a BillboardGui with text above a part.
 | `attr_text_color` | Color3 | white | Text color |
 | `attr_text_size` | number | 24 | Text size |
 | `attr_offset` | number | 3 | Offset above the part |
+| `attr_font` | Font | Gotham Bold | Text font |
 
 ---
 

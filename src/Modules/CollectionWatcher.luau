@@ -1,8 +1,9 @@
 --!strict
 local CollectionService = game:GetService("CollectionService")
 
-local Maid = require(script.Parent.Parent.Maid)
-local Signal = require(script.Parent.Parent.Signal)
+-- Wally installs dependencies beside the package, not inside it
+local Maid = require(script.Parent.Parent.Parent.Maid)
+local Signal = require(script.Parent.Parent.Parent.Signal)
 
 --[[
 	@class CollectionObject

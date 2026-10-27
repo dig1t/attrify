@@ -72,6 +72,7 @@ end)
 | Signal | Parameters | Fires when |
 |--------|------------|------------|
 | `CoinCollected` | player, value, part | A player picks up a coin |
+| `CoinLocalTouched` | part | The local player touches a coin (client only) |
 | `CollectibleCollected` | player, type, amount, part | A player picks up a collectible |
 | `PromptTriggered` | player, part | A player uses a proximity prompt |
 | `Clicked` | player, part | A player clicks a clickable part |

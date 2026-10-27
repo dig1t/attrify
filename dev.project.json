@@ -7,25 +7,21 @@
       "$className": "ReplicatedStorage",
 
       "Attrify": {
-        "$path": "src",
-
-        "Util": {
-          "$path": "modules/roblox-modules/src/Util"
-        },
-
-        "Maid": {
-          "$path": "modules/roblox-modules/src/Maid"
-        },
-
-        "Signal": {
-          "$path": "modules/roblox-modules/src/Signal"
-        }
+        "$path": "src"
       },
 
-      "TestEZ": {
-        "$path": "modules/testez"
+      "Util": {
+        "$path": "modules/roblox-modules/src/Util"
+      },
+
+      "Maid": {
+        "$path": "modules/roblox-modules/src/Maid"
+      },
+
+      "Signal": {
+        "$path": "modules/roblox-modules/src/Signal"
       }
-	  },
+    },
 
     "ReplicatedFirst": {
       "$className": "ReplicatedFirst",

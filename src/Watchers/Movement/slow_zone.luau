@@ -10,7 +10,7 @@
 local RunService = game:GetService("RunService")
 
 local Attrify = script.Parent.Parent.Parent
-local Packages = Attrify
+local Packages = Attrify.Parent
 
 local CollectionWatcher = require(Attrify.Modules.CollectionWatcher)
 local Util = require(Packages.Util)

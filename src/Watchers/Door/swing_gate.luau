@@ -10,6 +10,10 @@
 	- attr_open_time: number (default: 0.5) - Time to open/close
 	- attr_trigger_distance: number (default: 10) - Distance to trigger opening
 	- attr_axis: Vector3 (default: 0, 1, 0) - Rotation axis
+
+	Children:
+	- Open: Sound (optional) - Plays when the gate starts opening
+	- Close: Sound (optional) - Plays when the gate finishes closing
 ]]
 
 local RunService = game:GetService("RunService")
@@ -43,8 +47,20 @@ SwingGate:RegisterHandler(function(object: CollectionWatcher.CollectionObject<Mo
 
 	local currentAngle = 0
 	local targetAngle = 0
+	local isOpen = false
+	local isClosing = false
 
 	local triggerDistanceSq = triggerDistance * triggerDistance
+	-- Unsigned so a negative attr_open_angle swings the other way
+	local rotationSpeed = math.abs(openAngle) / openTime
+
+	local function playSound(name: string)
+		local sound = object.context:FindFirstChild(name)
+
+		if sound and sound:IsA("Sound") then
+			sound:Play()
+		end
+	end
 
 	local connection = RunService.Heartbeat:Connect(function(deltaTime)
 		if not object.context or not object.context.Parent then
@@ -64,17 +80,29 @@ SwingGate:RegisterHandler(function(object: CollectionWatcher.CollectionObject<Mo
 			end
 		end
 
+		if shouldBeOpen ~= isOpen then
+			isOpen = shouldBeOpen
+			isClosing = not shouldBeOpen
+
+			if shouldBeOpen then
+				playSound("Open")
+			end
+		end
+
 		targetAngle = shouldBeOpen and openAngle or 0
 
 		local angleDiff = targetAngle - currentAngle
-		local rotationSpeed = openAngle / openTime
 
-		if math.abs(angleDiff) > 0.1 then
-			local angleChange = math.sign(angleDiff) * rotationSpeed * deltaTime
-			if math.abs(angleChange) > math.abs(angleDiff) then
-				angleChange = angleDiff
+		if angleDiff ~= 0 then
+			local angleStep = rotationSpeed * deltaTime
+
+			-- The last step lands exactly on the target, so a resting gate
+			-- is never left slightly ajar
+			if math.abs(angleDiff) <= angleStep then
+				currentAngle = targetAngle
+			else
+				currentAngle += math.sign(angleDiff) * angleStep
 			end
-			currentAngle += angleChange
 
 			object.context:PivotTo(
 				closedPivot
@@ -84,6 +112,11 @@ SwingGate:RegisterHandler(function(object: CollectionWatcher.CollectionObject<Mo
 						axis.Z * math.rad(currentAngle)
 					)
 			)
+		end
+
+		if isClosing and currentAngle == 0 then
+			isClosing = false
+			playSound("Close")
 		end
 	end)
 
